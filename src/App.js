@@ -25,20 +25,15 @@ function App() {
   
   useEffect(() => {
     const fetchPharmacy = async () => {
-      setLoading(true)
-      
       const res = await fetch('http://localhost:8090/zones/pharmacies/'+selected_zone)
       const result = await res.json()
       setPharmacyData(result)
-      setLoading(false)
-    }
-    const fetchVille = async () => {
-      setLoading(true)
       
+    }
+    const fetchVille = async () => { 
       const res = await fetch('http://localhost:8090/villes/all')
       const result = await res.json()
       setVille(result)
-      setLoading(false)
     }
     if(selected_zone!="0")
     {

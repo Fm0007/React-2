@@ -1,14 +1,17 @@
-import { MapContainer, TileLayer, useMap , useMapEvents , Marker ,Popup} from 'react-leaflet'
-import {Icon} from '@iconify/react'
+import { MapContainer, TileLayer , useMapEvents , Marker ,Popup} from 'react-leaflet'
 
 import {useEffect, useState} from 'react'
 import Routing from './Routing'
 
 
 const Map = ({eventData,choosePosition,curent_position,selected_PH}) => {
+  const [loading, setLoading] = useState(true)
   const [position, setPosition] = useState(null)
-  useEffect(() => {  
+  useEffect(() => {
 
+    if(selected_PH!=0 && position!=null){
+      setLoading(false)
+    }
 
 
     
@@ -25,19 +28,14 @@ const Map = ({eventData,choosePosition,curent_position,selected_PH}) => {
             console.log(selected_PH)
           },
         })
-        if(selected_PH!=0){
+        
           return position === null ? null : (
             <Marker position={position}>
               <Popup>You are here</Popup>
-              <Routing source={curent_position} destination={selected_PH} />
             </Marker>
           )
-        }
-       
-          
-        
       }
-
+      
 
 
     const markers = eventData.map((ev, index) => {
@@ -59,6 +57,7 @@ const Map = ({eventData,choosePosition,curent_position,selected_PH}) => {
   />
     <LocationMarker />
     {markers}
+    { !loading ? <Routing source={curent_position} destination={selected_PH} /> : <></>}
 </MapContainer>
     </div>
   )

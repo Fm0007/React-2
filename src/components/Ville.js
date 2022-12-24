@@ -19,7 +19,7 @@ const Ville = ({ville,chooseZone}) => {
             <option value="0">--Veillez Choissir une ville--</option>
             {villes}
         </select>
-        <Zone ville={selected_ville} chooseZone={chooseZone} />
+        <Zone ville={selected_ville} chooseZone={chooseZone}  />
     </div>
    
   )

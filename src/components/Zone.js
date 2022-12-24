@@ -26,6 +26,7 @@ const Zone = ({ville,chooseZone}) => {
     if(ville!=="0") {
       fetchZones()
       setTt("0")
+
     }
     
 
