@@ -6,13 +6,11 @@ import Header from './components/Header'
 
 function App() {
   const [curent_position , setCurent_position] = useState()
-  const [loading1, setLoading1] = useState(true)
   const [selected_PH , setSelected_PH] = useState("0")
   const [selected_zone , setSelected_Zone] = useState("0")
   const [pharmacytData, setPharmacyData] = useState([])
   const [loading, setLoading] = useState(false)
   const [ville , setVille] = useState([])
-  const [center , setCenter] = useState(0)
     const choosePosition = (center) => {
         setCurent_position(center);
       };
@@ -55,7 +53,7 @@ function App() {
     <div>
       <Header ville={ville} chooseZone={chooseZone} />
       <Navbar selected_zone={selected_zone} choosePH={choosePH}  />
-      { !loading ? <Map selected_PH={selected_PH} eventData={pharmacytData} choosePosition={choosePosition} center={center} curent_position={curent_position} /> : <Loader /> }
+      { !loading ? <Map selected_PH={selected_PH} eventData={pharmacytData} choosePosition={choosePosition} curent_position={curent_position} /> : <Loader /> }
     </div>
   );
 }
