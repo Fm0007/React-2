@@ -9,6 +9,8 @@ function App() {
   const [selected_PH , setSelected_PH] = useState("0")
   const [selected_zone , setSelected_Zone] = useState("0")
   const [pharmacytData, setPharmacyData] = useState([])
+  const [pharmacytNuit, setPharmacyNuit] = useState([])
+  const [pharmacytJour, setPharmacyJour] = useState([])
   const [loading, setLoading] = useState(false)
   const [ville , setVille] = useState([])
     const choosePosition = (center) => {
@@ -30,6 +32,16 @@ function App() {
       setPharmacyData(result)
       
     }
+    const fetchPharmacyJour = async () => {
+      const res = await fetch('http://localhost:8090/pharmacieDeGardes/getActual/jour/'+selected_zone)
+      const result = await res.json()
+      setPharmacyJour(result)
+    }
+    const fetchPharmacyNuit = async () => {
+      const res = await fetch('http://localhost:8090/pharmacieDeGardes/getActual/nuit/'+selected_zone)
+      const result = await res.json()
+      setPharmacyNuit(result)
+    }
     const fetchVille = async () => { 
       const res = await fetch('http://localhost:8090/villes/all')
       const result = await res.json()
@@ -41,6 +53,8 @@ function App() {
     }
    
     fetchVille()
+    fetchPharmacyJour()
+    fetchPharmacyNuit()
     
   }, [selected_zone] )
 
@@ -48,7 +62,7 @@ function App() {
     <div>
       <Header ville={ville} chooseZone={chooseZone} />
       <Navbar selected_zone={selected_zone} choosePH={choosePH}  />
-      { !loading ? <Map selected_PH={selected_PH} eventData={pharmacytData} choosePosition={choosePosition} curent_position={curent_position} /> : <Loader /> }
+      { !loading ? <Map selected_PH={selected_PH} eventData={pharmacytData} choosePosition={choosePosition} curent_position={curent_position} pharmacytNuit={pharmacytNuit} pharmacytJour={pharmacytJour} /> : <Loader /> }
     </div>
   );
 }

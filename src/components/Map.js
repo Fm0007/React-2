@@ -1,10 +1,10 @@
-import { MapContainer, TileLayer , useMapEvents , Marker ,Popup} from 'react-leaflet'
+import { MapContainer, LayerGroup ,  TileLayer , LayersControl , useMapEvents , Marker ,Popup} from 'react-leaflet'
 
 import {useEffect, useState} from 'react'
 import Routing from './Routing'
 
 
-const Map = ({eventData,choosePosition,curent_position,selected_PH}) => {
+const Map = ({eventData,choosePosition,curent_position,selected_PH,pharmacytJour,pharmacytNuit}) => {
   const [loading, setLoading] = useState(true)
   const [position, setPosition] = useState(null)
   useEffect(() => {
@@ -46,6 +46,22 @@ const Map = ({eventData,choosePosition,curent_position,selected_PH}) => {
                 </Popup>
             </Marker >
     })
+    const markersJour = pharmacytJour.map((ev, index) => {
+        
+      return <Marker  key={index} position={[ ev.pharmacie.lat , ev.pharmacie.log]} >
+           <Popup>
+              {ev.nom} <br /> Easily customizable.
+              </Popup>
+          </Marker >
+  })
+  const markersNuit = pharmacytNuit.map((ev, index) => {
+        
+    return <Marker  key={index} position={[ ev.pharmacie.lat , ev.pharmacie.log]} >
+         <Popup>
+            {ev.nom} <br /> Easily customizable.
+            </Popup>
+        </Marker >
+})
 
 
   return (
@@ -56,9 +72,26 @@ const Map = ({eventData,choosePosition,curent_position,selected_PH}) => {
     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
   />
     <LocationMarker />
-    {markers}
+    <LayersControl position="topright">
+          <LayersControl.Overlay checked  name="Toute les pharmacies">
+          <LayerGroup>
+            {markers}
+          </LayerGroup>
+          </LayersControl.Overlay>
+      <LayersControl.Overlay checked  name="les pharmacies Garde Nuits">
+      <LayerGroup>
+        {markersNuit}
+       </LayerGroup>
+      </LayersControl.Overlay>
+      <LayersControl.Overlay checked  name="les pharmacies Garde Jour">
+      <LayerGroup>
+        {markersJour}
+       </LayerGroup>
+      </LayersControl.Overlay>
+      </LayersControl>
+    
     { !loading ? <Routing source={curent_position} destination={selected_PH} /> : <></>}
-</MapContainer>
+    </MapContainer>
     </div>
   )
 }
