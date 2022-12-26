@@ -2,7 +2,24 @@ import { MapContainer, LayerGroup ,  TileLayer , LayersControl , useMapEvents , 
 
 import {useEffect, useState} from 'react'
 import Routing from './Routing'
+import { icon } from "leaflet"
 
+const ICON1 = icon({
+  iconUrl: "https://i.pinimg.com/originals/57/1a/e3/571ae39ce1b3360b0cf852322b413bdb.png",
+  iconSize: [40, 40],
+})
+const ICOND = icon({
+  iconUrl: "https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/64151/sun-icon-clipart-xl.png",
+  iconSize: [40, 40],
+})
+const ICONN = icon({
+  iconUrl: "https://cdn-icons-png.flaticon.com/512/1809/1809597.png",
+  iconSize: [40, 40],
+})
+const ICONU = icon({
+  iconUrl: "https://icon-library.com/images/2018/2112015_marker-circle-map-marker-circle-png-png-download.png",
+  iconSize: [40, 40],
+})
 
 const Map = ({eventData,choosePosition,curent_position,selected_PH,pharmacytJour,pharmacytNuit}) => {
   const [loading, setLoading] = useState(true)
@@ -30,7 +47,7 @@ const Map = ({eventData,choosePosition,curent_position,selected_PH,pharmacytJour
         })
         
           return position === null ? null : (
-            <Marker position={position}>
+            <Marker  position={position}>
               <Popup>You are here</Popup>
             </Marker>
           )
@@ -40,7 +57,7 @@ const Map = ({eventData,choosePosition,curent_position,selected_PH,pharmacytJour
 
     const markers = eventData.map((ev, index) => {
         
-        return <Marker  key={index} position={[ ev.lat , ev.log]} >
+        return <Marker icon={ICON1}  key={index} position={[ ev.lat , ev.log]} >
              <Popup>
                 {ev.nom} <br /> Easily customizable.
                 </Popup>
@@ -48,17 +65,17 @@ const Map = ({eventData,choosePosition,curent_position,selected_PH,pharmacytJour
     })
     const markersJour = pharmacytJour.map((ev, index) => {
         
-      return <Marker  key={index} position={[ ev.pharmacie.lat , ev.pharmacie.log]} >
+      return <Marker icon={ICOND}  key={index} position={[ ev.pharmacie.lat , ev.pharmacie.log]} >
            <Popup>
-              {ev.nom} <br /> Easily customizable.
+              {ev.pharmacie.nom} <br /> Easily customizable.
               </Popup>
           </Marker >
   })
   const markersNuit = pharmacytNuit.map((ev, index) => {
         
-    return <Marker  key={index} position={[ ev.pharmacie.lat , ev.pharmacie.log]} >
+    return <Marker icon={ICONN} key={index} position={[ ev.pharmacie.lat , ev.pharmacie.log]} >
          <Popup>
-            {ev.nom} <br /> Easily customizable.
+            {ev.pharmacie.nom} <br /> Easily customizable.
             </Popup>
         </Marker >
 })
@@ -78,12 +95,12 @@ const Map = ({eventData,choosePosition,curent_position,selected_PH,pharmacytJour
             {markers}
           </LayerGroup>
           </LayersControl.Overlay>
-      <LayersControl.Overlay checked  name="les pharmacies Garde Nuits">
+      <LayersControl.Overlay   name="les pharmacies Garde Nuits">
       <LayerGroup>
         {markersNuit}
        </LayerGroup>
       </LayersControl.Overlay>
-      <LayersControl.Overlay checked  name="les pharmacies Garde Jour">
+      <LayersControl.Overlay   name="les pharmacies Garde Jour">
       <LayerGroup>
         {markersJour}
        </LayerGroup>

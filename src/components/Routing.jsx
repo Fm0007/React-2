@@ -16,7 +16,15 @@ export default function Routing({source,destination}) {
 
     const routingControl = L.Routing.control({
       waypoints: [L.latLng(source.lat, source.lng), L.latLng(destination.lat, destination.lng)],
-      language: 'fr'
+      language: 'fr',
+      lineOptions: {styles: [{color: '#242c81', weight: 2}]},
+        fitSelectedRoutes: true,
+        draggableWaypoints: false,
+        routeWhileDragging: false,
+        createMarker: function() { return null; },
+        lineOptions : {
+            addWaypoints: false
+        }
     }).addTo(map);
 
     return () => map.removeControl(routingControl);
