@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import Map from './components/Map'
 import Loader from './components/Loader'
-import Navbar from './components/Navbar'
 import Header from './components/Header'
 
 function App() {
@@ -61,8 +60,7 @@ function App() {
   return (
     <div>
       <Header ville={ville} chooseZone={chooseZone} />
-      <Navbar selected_zone={selected_zone} choosePH={choosePH}  />
-      { !loading ? <Map selected_PH={selected_PH} eventData={pharmacytData} choosePosition={choosePosition} curent_position={curent_position} pharmacytNuit={pharmacytNuit} pharmacytJour={pharmacytJour} /> : <Loader /> }
+      { !loading ? <Map selected_PH={selected_PH} choosePH={choosePH} eventData={pharmacytData} choosePosition={choosePosition} curent_position={curent_position} pharmacytNuit={pharmacytNuit} pharmacytJour={pharmacytJour} /> : <Loader /> }
     </div>
   );
 }

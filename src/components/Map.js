@@ -3,6 +3,7 @@ import { MapContainer, LayerGroup ,  TileLayer , LayersControl , useMapEvents , 
 import {useEffect, useState} from 'react'
 import Routing from './Routing'
 import { icon } from "leaflet"
+import { Icon } from '@iconify/react'
 
 const ICON1 = icon({
   iconUrl: "https://i.pinimg.com/originals/57/1a/e3/571ae39ce1b3360b0cf852322b413bdb.png",
@@ -21,7 +22,7 @@ const ICONU = icon({
   iconSize: [40, 40],
 })
 
-const Map = ({eventData,choosePosition,curent_position,selected_PH,pharmacytJour,pharmacytNuit}) => {
+const Map = ({choosePH,eventData,choosePosition,curent_position,selected_PH,pharmacytJour,pharmacytNuit}) => {
   const [loading, setLoading] = useState(true)
   const [position, setPosition] = useState(null)
   useEffect(() => {
@@ -56,18 +57,23 @@ const Map = ({eventData,choosePosition,curent_position,selected_PH,pharmacytJour
 
 
     const markers = eventData.map((ev, index) => {
-        
+      const lat = ev.lat
+      const lng =  ev.log
+      const url = "http://localhost:8090/get/imagep/" + ev.id
         return <Marker icon={ICON1}  key={index} position={[ ev.lat , ev.log]} >
              <Popup>
-                {ev.nom} <br /> Easily customizable.
+               <h2><Icon icon="healthicons:pharmacy"  />{ev.nom}</h2>
+               <img style={ {width : "16rem"}} src={url} alt='pharmacy'></img> 
+                <h3> adresse : {ev.adresse} </h3>
+                <button onClick={() => choosePH({lat , lng})}><Icon icon="entypo:location" /> Localiser </button>
                 </Popup>
             </Marker >
     })
     const markersJour = pharmacytJour.map((ev, index) => {
         
       return <Marker icon={ICOND}  key={index} position={[ ev.pharmacie.lat , ev.pharmacie.log]} >
-           <Popup>
-              {ev.pharmacie.nom} <br /> Easily customizable.
+           <Popup >
+           {ev.nom} <br /> Easily customizable.
               </Popup>
           </Marker >
   })
