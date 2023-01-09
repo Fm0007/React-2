@@ -70,20 +70,30 @@ const Map = ({choosePH,eventData,choosePosition,curent_position,selected_PH,phar
             </Marker >
     })
     const markersJour = pharmacytJour.map((ev, index) => {
-        
+      const lat = ev.pharmacie.lat
+      const lng =  ev.pharmacie.log
+      const url = "http://localhost:8090/get/imagep/" + ev.pharmacie.id
       return <Marker icon={ICOND}  key={index} position={[ ev.pharmacie.lat , ev.pharmacie.log]} >
-           <Popup >
-           {ev.nom} <br /> Easily customizable.
-              </Popup>
+          <Popup>
+               <h2><Icon icon="healthicons:pharmacy"  />{ev.pharmacie.nom}</h2>
+               <img style={ {width : "16rem"}} src={url} alt='pharmacy'></img> 
+                <h3> adresse : {ev.pharmacie.adresse} </h3>
+                <button onClick={() => choosePH({lat , lng})}><Icon icon="entypo:location" /> Localiser </button>
+                </Popup>
           </Marker >
   })
   const markersNuit = pharmacytNuit.map((ev, index) => {
-        
+    const lat = ev.pharmacie.lat
+    const lng =  ev.pharmacie.log
+    const url = "http://localhost:8090/get/imagep/" + ev.pharmacie.id
     return <Marker icon={ICONN} key={index} position={[ ev.pharmacie.lat , ev.pharmacie.log]} >
          <Popup>
-            {ev.pharmacie.nom} <br /> Easily customizable.
-            </Popup>
-        </Marker >
+               <h2><Icon icon="healthicons:pharmacy"  />{ev.pharmacie.nom}</h2>
+               <img style={ {width : "16rem"}} src={url} alt='pharmacy'></img> 
+                <h3> adresse : {ev.pharmacie.adresse} </h3>
+                <button onClick={() => choosePH({lat , lng})}><Icon icon="entypo:location" /> Localiser </button>
+                </Popup>
+          </Marker >
 })
 
 
